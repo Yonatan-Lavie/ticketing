@@ -19,3 +19,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .                                    
+    - image: yonatanlavie/client
+    # - image: us.gcr.io/ticketing-dev-325321/auth
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .                                    
