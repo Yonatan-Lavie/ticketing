@@ -21,6 +21,8 @@ spec:
               secretKeyRef:
                 name: jwt-secret
                 key: JWT_KEY
+          - name: MONGO_URI
+            value: "mongodb://auth-mongo-srv:27017/auth"
         # image: us.gcr.io/ticketing-dev-325321/auth
         resources:
           limits:
