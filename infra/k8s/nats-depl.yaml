@@ -20,11 +20,11 @@ spec:
             "4222",
             "-m",
             "8222",
-            "-hbi",
+            "-hbi", # sends hart bit every 5s to the client
             "5s",
-            "-hbt",
+            "-hbt", # how long can client can respond to server
             "5s",
-            "-hbf",
+            "-hbf", # how meny times can client fills respond back hart bit to nats server before the server delete him from subscription
             "2",
             "-SD",
             "-cid",
