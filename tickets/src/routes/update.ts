@@ -7,6 +7,8 @@ import {
     validateRequest 
 } from '@ly-common-lib/common'
 import {Ticket} from '../models/ticket'
+import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -37,6 +39,12 @@ router.put(
     ticket.set({ title, price });
     await ticket.save();
 
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId
+    });
 
     res.send(ticket);
 });
