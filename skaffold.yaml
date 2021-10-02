@@ -37,3 +37,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .                                    
+    - image: yonatanlavie/orders
+    # - image: us.gcr.io/ticketing-dev-325321/auth
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .                                    
