@@ -5,22 +5,22 @@ import mongoose from 'mongoose';
 interface TicketAttrs {
     title: string,
     price: number,
-    userId: string
 }
 
 // An interface that describes the properties
 // that a Ticket Document has
-interface TicketDoc extends mongoose.Document {
+export interface TicketDoc extends mongoose.Document {
     title: string,
     price: number,
-    userId: string
 }
+
 
 // An interface that describes the properties
 // that a Ticket Model has
 interface TicketModel extends mongoose.Model<TicketDoc> {
     build(attrs: TicketAttrs) : TicketDoc;
 }
+
 
 
 const ticketSchema = new mongoose.Schema({
@@ -30,22 +30,17 @@ const ticketSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
-    userId: {
-        type: String,
-        required: true
-    }
-}, 
-{  
-      toJSON: {
-            transform(doc, ret) {
-                ret.id = ret._id;
-                delete ret._id;
-            }
-        }
-    }
-);
+},{  
+    toJSON: {
+          transform(doc, ret) {
+              ret.id = ret._id;
+              delete ret._id;
+          }
+      }
+  });
 
 
 
