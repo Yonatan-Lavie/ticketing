@@ -1,7 +1,10 @@
 import request from 'supertest';
-import {genCookie} from '../../test/helper'
+import {genCookie} from '../../test/helper';
 import {app} from '../../app';
-import { Ticket } from '../../models/ticket'
+import { Ticket } from '../../models/ticket';
+import { natsWrapper } from '../../nats-wrapper'
+
+
 
 it('has a route headnler to /api/tickets for posts requests', async () => {
     const response = await request(app).post('/api/tickets').send({});
@@ -76,5 +79,22 @@ it('creates a ticket with valid input', async () => {
     expect(tickets[0].title).toEqual(title)
 });
 
+it('publishes an event', async () => {
+    const title = 'asdf';
+    const price = 10;
+    const cookie = await genCookie();
+    
+    let tickets = await Ticket.find({})
+    expect(tickets.length).toEqual(0);
+
+    const response = await request(app).post('/api/tickets').set('Cookie', cookie).send({
+        title,
+        price
+    });
+
+    expect(response.status).toEqual(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+})
 
 
