@@ -2,13 +2,15 @@ import mongoose from 'mongoose';
 import { OrderStatus } from '@ly-common-lib/common';
 import { TicketDoc } from './ticket'
 
+export { OrderStatus };
+
 // an interface that describes the properties 
 // that are required to create a new Order
 interface OrderAttrs {
     userId: string,
     status: OrderStatus,
     expiresAt: Date,
-    ticke: TicketDoc,
+    ticket: TicketDoc,
 }
 // An interface that describes the properties
 // that a Order Document has
@@ -16,7 +18,7 @@ interface OrderDoc extends mongoose.Document {
     userId: string,
     status: OrderStatus,
     expiresAt: Date,
-    ticke: TicketDoc,
+    ticket: TicketDoc,
 }
 
 // An interface that describes the properties

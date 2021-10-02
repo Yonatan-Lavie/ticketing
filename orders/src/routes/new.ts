@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
 import express, {Request, Response} from 'express';
-import { NotFoundError, OrderStatus, requireAuth, validateRequest} from '@ly-common-lib/common';
+import { BadRequestError, NotFoundError, OrderStatus, requireAuth, validateRequest} from '@ly-common-lib/common';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { Order } from '../models/order';
 
 const router = express.Router();
+
+const EXPIRATION_WINDOWS_SWCONDS = 15 *60;
+
 
 router.post(
     '/api/orders',
@@ -32,15 +35,28 @@ router.post(
         // Run query to look at all orders. Find an order where the ticket
         // is the ticket we just found  *and* the orders status in *not* cancelled.
         // if we find an order from that means the ticket *is* reserved
+        const isReserved = await ticket.isReserved();
 
+        if(isReserved) {
+            throw new BadRequestError('Ticket is already reserved');
+        }
 
         // Calculate an expiration date for this order
+        const expiration = new Date();
+        expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOWS_SWCONDS)
 
         // Build the order and save it to the database
+        const order = Order.build({
+            userId: req.currentUser!.id,
+            status: OrderStatus.Created,
+            expiresAt: expiration,
+            ticket: ticket
+        });
+        await order.save();
 
-    //Publish an event saying that an order was created
+        //Publish an event saying that an order was created
 
-    res.send({});
+    res.status(201).send(order);
 });
 
 export { router as newOrderRouter };
