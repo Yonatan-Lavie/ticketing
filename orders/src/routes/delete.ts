@@ -2,7 +2,9 @@ import express, {Request, Response} from 'express';
 import mongoose from 'mongoose'
 import { NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from '@ly-common-lib/common';
 import { Order, OrderStatus } from '../models/order'
-import { param } from 'express-validator'
+import { param } from 'express-validator';
+import { OrderCancelledPublisher} from '../events/publishers/order-cancelled-publisher'
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -21,7 +23,7 @@ router.delete(
     
     const { orderId } = req.params;
     
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).populate('ticket');
     
     if(!order){
         throw new NotFoundError();
@@ -33,6 +35,12 @@ router.delete(
     await order.save();
 
     // publishing an event saying this was cancelled
+    new OrderCancelledPublisher(natsWrapper.client).publish({
+        id: order.id,
+        ticket: {
+            id: order.ticket.id
+        }
+    });
 
     res.status(204).send({});
 });
