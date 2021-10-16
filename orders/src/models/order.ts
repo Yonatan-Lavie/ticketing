@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@ly-common-lib/common';
 import { TicketDoc } from './ticket'
 
@@ -26,6 +27,7 @@ interface OrderDoc extends mongoose.Document {
 // that a Order Model has
 interface OrderModel extends mongoose.Model<OrderDoc> {
     build(attrs: OrderAttrs) : OrderDoc;
+    findByEvent(event: {id: string, version: number}): Promise<OrderDoc | null>
 }
 
 
@@ -62,7 +64,19 @@ const orderSchema = new mongoose.Schema(
     }
 );
 
+// config monogoDB repalce __v filed  name with a new name "version" 
+// this  __v  filed is represent the version number of updated doc
+orderSchema.set('versionKey', 'version');
+//This plugin brings optimistic concurrency control to 
+//Mongoose documents by incrementing document version numbers on each save
+orderSchema.plugin(updateIfCurrentPlugin);
 
+orderSchema.statics.findByEvent = (event: {id: string, version: number}) => {
+    return Order.findOne({
+        _id: event.id,
+        version: event.version - 1
+    });
+};
 
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
