@@ -10,7 +10,7 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
-const EXPIRATION_WINDOWS_SWCONDS = 15 *60;
+const EXPIRATION_WINDOWS_SWCONDS = 1 *60;
 
 
 router.post(
