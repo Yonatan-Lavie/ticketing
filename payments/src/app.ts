@@ -3,7 +3,9 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
-import {currentUser} from '@ly-common-lib/common'
+import { createChargeRouter } from './routes/new'
+
+import { currentUser } from '@ly-common-lib/common'
 import { errorHandler } from '@ly-common-lib/common'
 import { NotFoundError } from '@ly-common-lib/common'
 
@@ -18,6 +20,8 @@ app.use(
   );
 
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 
 app.get('*', async () => {
