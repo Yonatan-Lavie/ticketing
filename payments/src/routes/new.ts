@@ -38,6 +38,9 @@ router.post('/api/payments',
         if (order.status === OrderStatus.Cancelled){
             throw new BadRequestError('Cennot pay for an cancelled order');
         }
+        if (order.status === OrderStatus.Complete){
+            throw new BadRequestError('Cennot pay for an Completed order');
+        }
 
         const charge = await stripe.charges.create({
             currency: 'usd',
@@ -52,11 +55,17 @@ router.post('/api/payments',
 
         await payment.save();
 
-        new PaymentCreatedPublisher(natsWrapper.client).publish({
+        await new PaymentCreatedPublisher(natsWrapper.client).publish({
             id: payment.id,
             orderId: payment.orderId,
             stripeId: payment.stripeId,
         })
+
+        order.set({
+            status: OrderStatus.Complete
+        });
+
+        await order.save();
 
 
         res.status(201).send({ id: payment.id });
