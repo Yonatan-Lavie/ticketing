@@ -6,7 +6,6 @@ import { natsWrapper } from './nats-wrapper'
 
 
 const start = async () => {
-    console.log(process.env.STRIPE_KEY);
     if(!process.env.JWT_KEY){
         throw new Error('JWT_KEY must be defined');
     }

@@ -11,7 +11,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
         const delay = new Date(data.expiresAd).getTime() - new Date().getTime();
         console.log('Waiting this many milliseconds to process the job: ', delay);
         
-        expiretionQueue.add({
+        await expiretionQueue.add({
             orderId: data.id
         }, {
             delay: delay,
