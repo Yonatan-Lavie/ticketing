@@ -35,6 +35,9 @@ To deploy the microservices application locally using Skaffold, you will need to
    - Kubernetes CLI: This is used to manage the local Kubernetes cluster.
    - Skaffold: This is used to build and deploy the application.
 2.  Clone the repository and navigate to the root directory of the project.
+```bash
+git clone https://github.com/Yonatan-Lavie/ticketing.git
+```
 
 3. Start the local Kubernetes cluster by running the following command: ```kubectl apply -f k8s``` 
 
