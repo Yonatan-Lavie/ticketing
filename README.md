@@ -8,7 +8,9 @@ The project can also be customized to suit the specific needs of the event organ
 By offering these capabilities, the project aims to simplify the ticket selling process and enhance the overall experience for both event organizers and customers.
 
 
-This project employs a range of technologies to create a highly scalable and efficient system for microservices.
+This project employs a range of technologies to create a highly scalable and efficient system for microservices.  
+
+`React` to enables an interactive and responsive user interfaces. by using reusable UI components and efficiently manage the state of the application.
 
 `Express` is a popular back-end web framework for Node.js that enables developers to build scalable and robust web applications. By using Express with TypeScript, the project can benefit from strong typing, which can help identify errors and improve code reliability.
 
