@@ -32,14 +32,25 @@ To deploy the microservices application locally using Skaffold, you will need to
 1. Install the required tools:
 
    - Docker Desktop: This will allow you to build and run Docker containers locally.
-   - Kubernetes CLI: This is used to manage the local Kubernetes cluster.
-   - Skaffold: This is used to build and deploy the application.
+      - Download docker desctop.
+      - Enable kubernetes single node cluster.
+   - Kubernetes CLI: This is used to manage the local Kubernetes cluster. [windows installtion guide](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/#install-kubectl-binary-with-curl-on-windows)
+   - chocolatey [choco]: Chocolatey brings the concepts of true package management to allow you to version things, manage dependencies and installation order, better inventory management, and other features. [NonAdministrative installtion guide](https://docs.chocolatey.org/en-us/choco/setup#non-administrative-install)
+   - Skaffold: This is used to build and deploy the application using chocolatey
+   ```bash
+   choco install skaffold
+   ```
+   upgrade version
+   ```bash
+   choco upgrade skaffold
+   ```
+   [windows installtion guide](https://skaffold.dev/docs/install/#standalone-binary)
 2.  Clone the repository and navigate to the root directory of the project.
 ```bash
 git clone https://github.com/Yonatan-Lavie/ticketing.git
 ```
 
-3. Start the local Kubernetes cluster by running the following command: ```kubectl apply -f k8s``` 
+3. Start the local Kubernetes cluster by running the following command: ```kubectl apply -f infra/k8s``` 
 
 4. Start Skaffold by running the following command: ```skaffold dev```  
 Skaffold will then build and deploy the application to the local Kubernetes cluster. Once the deployment is complete, you can access the application by visiting http://localhost in your web browser.
