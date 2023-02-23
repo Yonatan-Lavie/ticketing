@@ -1,12 +1,13 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v3
 kind: Config
+manifests:
+ rawYaml:
+ - ./infra/k8s/*
 deploy:
-  kubectl:
-    manifests:
-      - ./infra/k8s/*
+ kubectl: {}
 build:
   local:
-    push: true
+    push: false
   # googleCloudBuild:
   #   projectId: ticketing-dev-325321
   artifacts:
