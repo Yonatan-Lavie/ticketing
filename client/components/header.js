@@ -1,4 +1,12 @@
 import Link from 'next/link';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = ({ currentUser }) => {
   const links = [
@@ -11,23 +19,44 @@ const Header = ({ currentUser }) => {
     .filter((linkConfig) => linkConfig)
     .map(({ label, href }) => {
       return (
-        <li key={href} className="nav-item">
-          <Link href={href}>
-            <a className="nav-link">{label}</a>
-          </Link>
-        </li>
+        // <li key={href} className="nav-item">
+
+        <Button key={label} href={href} color="inherit">
+          {label}
+        </Button>
       );
     });
 
   return (
-    <nav className="navbar navbar-light bg-light">
-      <Link href="/">
-        <a className="navbar-brand">GitTix</a>
-      </Link>
-      <div className="d-flex justify-content-end">
-        <ul className="nav d-flex align-items-center">{links}</ul>
-      </div>
-    </nav>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Tix.io
+            </Typography> */}
+            <Button
+              sx={{ flexGrow: 1 }}
+              key={'Tix.io'}
+              href={'/'}
+              color="inherit"
+            >
+              Tix.io
+            </Button>
+            {links}
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 };
 
