@@ -7,6 +7,7 @@ import { createTicketRouter } from './routes/new'
 import { showTicketRouter } from './routes/show'
 import { indexTicketRouter } from './routes/index'
 import { updateTicketRouter } from './routes/update'
+import { userTicketsRouter } from './routes/user-tickets'
 
 import {currentUser} from '@ly-common-lib/common'
 import { errorHandler } from '@ly-common-lib/common'
@@ -25,6 +26,7 @@ app.use(
 app.use(currentUser);
 
 app.use(updateTicketRouter);
+app.use(userTicketsRouter);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 app.use(indexTicketRouter);
