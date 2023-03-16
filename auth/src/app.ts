@@ -7,8 +7,12 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
+
 import { errorHandler } from '@ly-common-lib/common'
 import { NotFoundError } from '@ly-common-lib/common'
+import { googleLoginRouter } from "./routes/login-google";
+import { facebookLoginRouter } from "./routes/login-facebook";
+import { localLoginRouter } from "./routes/login-local";
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,6 +24,9 @@ app.use(
     })
   );
 
+app.use(localLoginRouter)
+app.use(googleLoginRouter);
+app.use(facebookLoginRouter);
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);

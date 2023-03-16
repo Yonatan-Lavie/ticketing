@@ -21,13 +21,21 @@ spec:
               secretKeyRef:
                 name: jwt-secret
                 key: JWT_KEY
+          - name: GOOGLE_CLIENT_ID
+            value: "128187419836-v03cevjufhfbadbo8ih88j0mohjnplni.apps.googleusercontent.com"
+          - name: GOOGLE_CLIENT_SECRET
+            value: "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"
+          - name: FACEBOOK_CLIENT_ID
+            value: "988466155477585"
+          - name: FACEBOOK_CLIENT_SECRET
+            value: "36f2abc435ba7be2342042a5c754e6bc"
           - name: MONGO_URI
             value: "mongodb://auth-mongo-srv:27017/auth"
         # image: us.gcr.io/ticketing-dev-325321/auth
         resources:
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "512Mi"
+            cpu: "1000m"
 ---
 apiVersion: v1
 kind: Service

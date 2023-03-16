@@ -1,3 +1,12 @@
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from '@mui/material';
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
@@ -12,14 +21,36 @@ const TicketShow = ({ ticket }) => {
       Router.push('/orders/[orderId]', `/orders/${order.id}`),
   });
   return (
-    <div>
-      <h1>{ticket.title}</h1>
-      <h4>Price: {ticket.price}</h4>
-      {errors}
-      <button onClick={() => doRequest()} className="btn btn-primary">
-        Purchase
-      </button>
-    </div>
+    <Grid item key={ticket} xs={12} sm={6} md={4}>
+      <Card
+        sx={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <CardMedia
+          component="img"
+          sx={{
+            // 16:9
+            pt: '56.25%',
+          }}
+          image="https://source.unsplash.com/random"
+          alt="random"
+        />
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography gutterBottom variant="h5" component="h2">
+            {ticket.title}
+          </Typography>
+          <Typography>Price: {ticket.price}</Typography>
+        </CardContent>
+        <CardActions>
+          <Button onClick={() => doRequest()} size="small">
+            Purchase
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 };
 
